@@ -10,7 +10,10 @@ docker build -t bind9-nslookup ./bind9image
 
 2. run the docker image
 ```
-docker run -d -it  --name bind9-container --mount src="$(pwd)/bind9conf",target=/etc/bind,type=bind bind9-nslookup
+docker run -d -it  --name bind9-container \
+--mount src="$(pwd)/bind9conf",target=/etc/bind,type=bind \
+--mount src="$(pwd)/resolv.conf",target=/etc/resolv.conf,type=bind \
+bind9-nslookup
 ```
 
 3. we exec into the container and perform nslookup
@@ -18,7 +21,7 @@ docker run -d -it  --name bind9-container --mount src="$(pwd)/bind9conf",target=
 docker exec -it bind9-container /bin/sh
 
 # in the container 
-nslookup host1.kevslab.example.com 127.0.0.1
+nslookup host1.kevslab.example.com
 ```
 
 ## TODO add reverse records
