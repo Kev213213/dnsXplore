@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  bind9:
+    image: bind9-nslookup
+    container_name: bind9-container
+    stdin_open: true
+    tty: true
+    networks:
+      lab-net:
+        ipv4_address: 192.168.4.53
+    volumes:
+      - ./bind9conf:/etc/bind
+      - ./resolv.conf:/etc/resolv.conf
+
+  busybox1:
+    image: busybox
+    container_name: busybox1
+    command: sleep 3600
+    networks:
+      lab-net:
+        ipv4_address: 192.168.4.11
+    dns:
+      - 192.168.4.53
+
+  busybox2:
+    image: busybox
+    container_name: busybox2
+    command: sleep 3600
+    networks:
+      lab-net:
+        ipv4_address: 192.168.4.12
+    dns:
+      - 192.168.4.53
+
+networks:
+  lab-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.4.0/24
