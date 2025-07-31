@@ -24,4 +24,16 @@ docker exec -it bind9-container /bin/sh
 nslookup host1.kevslab.example.com
 ```
 
-## TODO add reverse records
+## dns server with 2 dummy containers in a different network
+
+> **NOTE** ensure you change the IP address to not conflict with current existing ranges on your system
+
+![DNS architecture](images/archs-dns-bind9-docker.drawio.png)
+
+```sh
+# to setup the above config run
+docker-compose up
+```
+
+## TODO 
+- [ ] add reverse records
